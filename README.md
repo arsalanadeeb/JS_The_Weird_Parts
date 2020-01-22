@@ -38,8 +38,10 @@ Name/Value Pairs and objects:-   Adress="13B Bakers Street" it is a name value p
                                  in any exicution context only one Name can be there.
   
 Global Environment and Global Object:- When You run your JS code many exicution context can form but there is one Exicution context that                                        will definetly form ie base exicution context or Global Environment .When this Global Exicution                                          Context or Global Environment is created it will create two things for you 
+           
                                        1:-Global Object(just a collection of name value pairs)
                                        2:-'this' variable
+                                       
 Excercise:-In oreder to Explain Global Object base/Global context and Global object and this auther creates Project 0001. here the src file is empty but in browser console you can see 'this' is getting mapped to window object and window object got created automatically 
 by JS engine .
                                  
