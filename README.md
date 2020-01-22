@@ -44,6 +44,33 @@ Global Environment and Global Object:- When You run your JS code many exicution 
                                        
 Excercise:-In oreder to Explain Global Object base/Global context and Global object and this auther creates Project 0001. here the src file is empty but in browser console you can see 'this' is getting mapped to window object and window object got created automatically 
 by JS engine .
+
+
+Ecicution context and Hoisting:-
+
+                                  console.log(b)
+                                    hoist()
+                                     var b="this will not hoist as it is"
+                                   function hoist(){
+                                       console.log("function as it is hoist but not variable")
+                                   }
+                                   
+                                   o/p:-  undefine
+                                          function as it is hoist but not variable
+                                   
+This is because at the time of exicution Syntax parser will give memory to all functions and variable for functions it will allocate the memory and put function body in that memory,but for variable it will only allocate the memory but assign with a placeholder called "undefine" 
+,hoisting is not a recommended way to use in your code .As people say hoisting is that all definitions get bubble up in the code
+that is not true if that happens variable use before declaration do not give undefine.
+
+
+Conceptual Aside 3:-  Undefine in JS
+                      undefine is a keyword a special value that is assigned by js engine .
+                      
+                      var a ,
+                      console.log(a) //undefine
+                      console.log(b) //Uncaught ReferenceError: b is not defined
+ So if a value is declared but not assigned JS eng will assigne a placeholder value undefine .Usage of keyword undefine should not be done by programmer to avoid conflict while debugging.
+ 
                                  
                                  
                                  
