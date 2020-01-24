@@ -48,28 +48,108 @@ by JS engine .
 
 Ecicution context and Hoisting:-
 
+      Exicution Context consist of two phases 
+      1:-Creation Phase(where memory allocation happen)
+      2:-Exicution Phase(where actual line by line exicution happen)
+
                                   console.log(b)
                                     hoist()
-                                     var b="this will not hoist as it is"
-                                   function hoist(){
+                                    console.log(newHoist)
+                                    
+                                    var b="this will not hoist as it is"
+                                    console.log(b)
+                                    
+                                  function hoist(){
+                                       console.log("function as it is hoist but not variable")
+                                   }
+                                
+                                var newHoist=  function (){
                                        console.log("function as it is hoist but not variable")
                                    }
                                    
                                    o/p:-  undefine
                                           function as it is hoist but not variable
+                                          undefine
+                                          "this will not hoist as it is"
                                    
-This is because at the time of exicution Syntax parser will give memory to all functions and variable for functions it will allocate the memory and put function body in that memory,but for variable it will only allocate the memory but assign with a placeholder called "undefine" 
+This is because at the time of exicution(creation phase) Syntax parser will give memory to all functions and variable for functions it will allocate the memory and put function body in that memory,but for variable it will only allocate the memory but assign with a placeholder called "undefine" 
+
+First time when we are doing console.log(b) its value is undefine because only creation phase of exicution have completed(in initial load) but when next time we are doing console.log(b) its giving the value because exicution context have been passed throug that statement.
+
 ,hoisting is not a recommended way to use in your code .As people say hoisting is that all definitions get bubble up in the code
-that is not true if that happens variable use before declaration do not give undefine.
+that is not true if that happens variable use before variable definition do not give undefine.
 
 
 Conceptual Aside 3:-  Undefine in JS
-                      undefine is a keyword a special value that is assigned by js engine .
+                      undefine is a keyword a special value that is assigned by js engine during exicution(creation phase).
                       
                       var a ,
                       console.log(a) //undefine
                       console.log(b) //Uncaught ReferenceError: b is not defined
  So if a value is declared but not assigned JS eng will assigne a placeholder value undefine .Usage of keyword undefine should not be done by programmer to avoid conflict while debugging.
+ 
+ 
+ Conceptual Aside 4:-
+ 
+ Single Threaded and Synchronous:-
+ Java script is a single threaded and sinchronous language.
+ 
+ Single Threaded:-
+ Thread is a light weight process,a process is a peice of code in exicution cobtext.Single threaded means one statement of the code from a thread can get exicuted on a perticular time.
+ 
+Synchronous:-
+In an order means the flow in which exicution will occure is define or simply linear .You can predict which peice of code will get exicuted if current line in exicution is known.
+
+
+Function Invocation and Exicution Stack:-
+
+
+                                  function a(){
+                                  console.log("a")
+                                  }
+                                  function b(){
+                                  console.log("b")
+                                  a()
+                                  }
+                                  var c=10;
+                                  b();
+
+
+When this peice of code loaded ,first global context get created (global object and 'this' get initialised) but where these memory get initialised answer is.... in Exicution stack 
+In exicution stack all function and var c get loaded but when b() get exicuted it is a function invocation/call/run.
+The moment a function invocation happen a new local exicution context get pushed in to exicution stack (with 'this' get initialised with local exicution context) and when function ends it again get popped even in case of IIFE.
+The top pointer of exicution stack always pointing to context that is currently getting exicuted .
+
+
+Function Context and Variable Enviroment:-
+
+                              function second(){
+                                var myVar     // what happen if you remove this line
+                                console.log(myVar)
+                              }
+
+                              function first(){
+                                  var myVar="first"
+                                  console.log(myVar)
+                                  second()
+                              }
+
+                              var myVar="global"
+                              console.log(myVar)
+                              first()
+                              o/p: global
+                                   first
+                                   undefine
+                            
+ Here auther took myVar in global context and in functions local context also.
+ When this code first gets loaded at creation time all function will get memory .at exicution time myVar ="global" get assigned,
+ on the invocation of first() new local context get created in exicution stack and at exicution of that context myVar which is not in global but in the exicution context of first() create a seperate copy of myVar and set it to "first" during the exicution phase.
+ Since second is only declaring myVar, at creation time 'undefine' get filled in myVar of second() context so it get printed.
+ 
+        
+
+
+ 
  
                                  
                                  
