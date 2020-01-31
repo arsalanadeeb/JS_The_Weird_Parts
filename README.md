@@ -146,7 +146,90 @@ Function Context and Variable Enviroment:-
  on the invocation of first() new local context get created in exicution stack and at exicution of that context myVar which is not in global but in the exicution context of first() create a seperate copy of myVar and set it to "first" during the exicution phase.
  Since second is only declaring myVar, at creation time 'undefine' get filled in myVar of second() context so it get printed.
  
+ 
+The Scope Chain:-
+Scope:-Is a area of code where your veriable and functions are awailable.
+
+The auther says if you call a function or use variable in exicution context it searches its definition in its local lexical scope .
+since every exicution context have Reference to outer lexical environment if the definition not found in local scope it will move one level up and search in its  parent's lexical scope.and if not found there one more level up and so on its a chain same prototype chain.
+ 
+        var a=1;                                                                
+
+        console.log(a)
+
+        m1();
+
+        function m1(){
+            var a =2
+            console.log(a)
+            b();
+        }
+
+        function b(){
+            var a;
+            console.log(a)
+        }
         
+        o/p:-
+        1
+        2
+        undefine
+when we log a is present in local context so got printed
+when we log a with in m1 its present in local context so got printed.
+when we log a with in b here a got define during creation phase with undefine so undefine got printed.
+        
+Reference to outer lexical environment:-A pointer in every exicution context in exicution stack that points to lexical scope of its parent.
+ 
+         var a=1;                                                                
+
+        console.log(a)
+
+        m1();
+
+        function m1(){
+            var a =2
+            console.log(a)
+            b();
+        }
+
+        function b(){
+            console.log(a)
+        }
+        
+        o/p:-
+        1
+        2
+        1
+when we log a is present in local context so got printed
+when we log a with in m1 its present in local context so got printed.
+when we log a with in b here a is not define during creation phase so it will look in to its parent lexical scope which is global.
+
+        var a=1;
+          console.log(a)
+
+          m1();
+
+          function m1(){
+              function b(){
+                  console.log(a)
+              }
+              var a =2
+              console.log(a)
+              b();
+          }
+          b();
+          o/p:
+           1
+           2
+           2
+           Uncaught ReferenceError: b is not defined
+
+           
+when we log a is present in local context so got printed
+when we log a with in m1 its present in local context so got printed.
+when we log a with in b here a is not define during creation phase of b so it will look in to its parent lexical scope which is m1.
+when we call b() from global context it gives b not define because b is not present lexically below the global it will get created 
+at the time of exicution phase of m1().
 
 
  
