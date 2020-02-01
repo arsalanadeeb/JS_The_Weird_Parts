@@ -232,16 +232,124 @@ when we call b() from global context it gives b not define because b is not pres
 at the time of exicution phase of m1().
 
 
-Asynchronous Call back
+Asynchronous Call back:-
 https://miro.medium.com/max/1050/1*zeKjWCjyAGZ9JN4fvnWsiA.png
 
+Java Script(v8 engine) is pure syncronous language but JS runtime environment is Asyncronous in nature.
 
+Why JS is synchronous
+
+
+                               function waitThreeSeconds() {
+                                        var ms = 5000 + new Date().getTime();
+                                        while (new Date() < ms){}
+                                        console.log("finished from async")
+                                    }
+
+                                    function clickHandler() {
+                                        console.log('click event!');   
+                                    }
+
+                                    // listen for the click event
+                                    document.getElementById("myButton").addEventListener('click', clickHandler);
+
+                                    waitThreeSeconds();
+                                    console.log('finished execution');
+                                    
+                                    o/p:-app.js:5 finished from async
+                                         app.js:16 finished execution
+
+
+
+ In this code waitThreeSeconds() is a blocking code it blocks the exicution for three seconds still the code is in sync because 
+ in JS run time environment API,Timers,HTTP Request and Events goes to WEB API and after complition come to CallBackQueue
+ from there event loop pics in FIFO fasion if exicution stack is empty .Since our waitThreeSecond function do not have any of the (
+ API,Timers,HTTP Request and Events) so it was actually busy in exicuting while loop .
+ 
+ By changing slightly in the code we can get no of time the while loop get exicuted 
+ 
+                                 
+                                 
+                                 
+                                  function waitThreeSeconds() {
+                                      var ms = 5000 + new Date().getTime();
+                                      let a=0;
+                                      while (new Date() < ms){
+                                         a++
+                                      }
+                                      console.log("exicution happend actually times: " ,a)
+                                      console.log("finished from async")
+                                  }
+
+                                  function clickHandler() {
+                                      console.log('click event!');   
+                                  }
+
+                                  // listen for the click event
+                                  document.getElementById("myButton").addEventListener('click', clickHandler);
+
+                                  waitThreeSeconds();
+                                  console.log('finished execution');           
+                                  
+                                  o/p:-
+                                  exicution happend actually times:  9387821
+                                  app.js:9 finished from async
+                                  app.js:20 finished execution
+                                  
+                                  
+ So if we cange the function waitThreeSeconds from sync blocking to asyc non blocking we should add any of the (
+ API,Timers,HTTP Request and Events) we will first start with timers.
  
  
-                                 
-                                 
-                                 
-                                 
+                             function waitThreeSeconds() {
+                                setTimeout(function(){ console.log("Hello sleep"); }, 4000);
+                            }
+
+                            function clickHandler() {
+                                console.log('click event!');   
+                            }
+
+                            // listen for the click event
+                            document.getElementById("myButton").addEventListener('click', clickHandler);
+
+                            waitThreeSeconds();
+                            console.log('finished execution');
+                            
+                            o/p:
+                            app.js:14 finished execution
+                            app.js:3 Hello sleep
+This is a example of async nonblocking code waitThreeSeconds get called first because its a timer and comes in (
+ API,Timers,HTTP Request and Events) it goes to web api then callback queue and thats why  console.log('finished execution')
+ got exicuted first and its a typical example of async nature of JSRE.
+ 
+ 
+ Now what if we do sleep for 0 sec will it be sync or async
+ 
+                                                       function waitThreeSeconds() {
+                                                          setTimeout(function(){ console.log("that was not good"); }, 0);
+                                                      }
+
+                                                      function clickHandler() {
+                                                          console.log('click event!');   
+                                                      }
+
+                                                      // listen for the click event
+                                                      document.getElementById("myButton").addEventListener('click', clickHandler);
+
+                                                      waitThreeSeconds();
+                                                      console.log('finished execution');
+                                                      
+                                                      o/p:-finished execution
+                                                           app.js:3 that was not good
+ The main key is wether the code will take the web API route or exicution stack will take care of it.
+ Since it is a timer and it comes under  (API,Timers,HTTP Request and Events) JSRE will pull this function from  exicution stack.
+ And put in to web api route now it will waite till exicution stack got empty.
+ 
+ For fun you try by replacing timer code with http request
+                                               fetch('https://jsonplaceholder.typicode.com/todos/1')
+                                            .then(response => response.json())
+                                            .then(json => console.log(json))
+ 
                                  
                                  
                                  
