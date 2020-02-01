@@ -232,6 +232,10 @@ when we call b() from global context it gives b not define because b is not pres
 at the time of exicution phase of m1().
 
 
+Asynchronous Call back
+https://miro.medium.com/max/1050/1*zeKjWCjyAGZ9JN4fvnWsiA.png
+
+
  
  
                                  
