@@ -346,17 +346,155 @@ This is a example of async nonblocking code waitThreeSeconds get called first be
  And put in to web api route now it will waite till exicution stack got empty.
  
  For fun you try by replacing timer code with http request
-                                               fetch('https://jsonplaceholder.typicode.com/todos/1')
+ 
+                                             fetch('https://jsonplaceholder.typicode.com/todos/1')
                                             .then(response => response.json())
                                             .then(json => console.log(json))
  
+Conceptual Aside:-
+Dynamically typed language:- the language in which variables can be assigned with out defining the type of the variable like int, float
+.JS is Dynamically typed language where var a=1 and var a="arsalan" both are correct.
+
+
+Primitive Data Type in JS:- 
+1:-UNDEFINED
+2:-NULL
+3:-NUMBER
+4:-STRING
+5:-BOOLEAN
+6:-SYMBOL
+
+
+Operators are function in JS:-
+
+  when you write 
+                        let a=4+5;
+
+ 4+5 is a infix notation of expression for info +4 5 is prefix and 4 5+ is a post fix .
+ since infix is more human readable infix expression gets converted in to a function call and that function returns the value and that 
+ return value get assigned with a.
+ 
+ For visualisation :-
+ 
+     let a=4+5;
+     let a=+(4,5)
+     where + is function which do return a+b
+ 
+ Operator presidence:-when there are different operators compiler have to pick which operation should I took first and so on.
+ 
+ Every operator has its own precedence value higher the precedence value earlier it gets exicuted.
+ Since every operator is a function call.The same happen in case of multiple operator case.
+ 
+ let a=3+4*5
+ 
+ Multiplication has more presidence than Add so 3+*(4,5) happen first
+ *(4,5) will return 20
+ 3+20 again +(3,20) =====23
+ 
+ Operator assiciativity:-
+ How will the computer decide if there will same operator whom to pick first.
+ There associativity comes
+               
+               a=1;b=2;c=4;
+
+               a=b=c
+               console.log(a)
+               console.log(b)
+               console.log(c)
+               o/p:4,4,4
+  Reason = has associativity from right to left.
+  
+  
+  Type Coersion:- is same as internal type casting in jS.
+  
+                 0==false  //true
+                 0==""      //true
+                  1>2<3      //true  precidence of > is more than < . 1>2 false .false<3  .false coerse to 0. 0<3 thats true
+                  1<2<2   //true      1<2 (true) coersed to 1 ,1<2(true) associativity of < is left to right.
+                  
+   The biggest asset to guess how things will coerse is Number() function .
+              
+              Number("")  //0
+              
+   Equality and Strict equality:=
+    
+   Equality(==)
+                       
+                       ""==false   //true     
+                       // "" coerse to  0 and same goes with false which is not a string but a boolean value
+   
+   JS gives us Strict Equality(===) which do not coerse any thing but compare with out doing any type casting.
+   
+   Link will tell you the sameness chart with different operator.
+   
+   https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness
+  
+ the auther says that coersion is not always bad and buggy but some time it helps you .
+ 
+              
+              var a 
+              //do some web operation and return to a
+              if(a){
+              do some thing
+              }
                                  
+  here if a is not null or undefine then do some thing will happen but if result return zero it will coerse to zero and condition become false 
+            
+              if(a || a===0){
+              }
+              
+here a===0 will give true and anything || true is true so do some thing will run even web operation will return 0 also.
+
+
+Setting default value :-
+
+
+                 function greet(name){
+                      name=name|| "  but you havent passed your name as argument"
+                      console.log("hellow " +name)
+                  }
+                  greet("arsalan")
+                  greet()
+                  
+                  o/p:-hellow arsalan
+                       hellow   but you havent passed your name as argument
+    
+  So here we are not using ES6 function greet(name="default") but we are using || operator.
+  || function will return the first argument which is true in nature
+
+                        undefined || 1   //1
+                        undefined || "hiii"   //"hii"
+                        null || 100        //100
+                        ""||"helllow"       //hellow
+                        
+  We are using the same logic that if user is not passing any thing at creation time compiler will assign local argument variable with
+  undefine and when you dont give any argument and directly try to  exicute it JS exicute it with undefine.
+  But undefined coerse to false or 0 so we are using that logic to initialise it.
+  
+  
+  What happen when we add different liberaries or .JS file in our html page.
+  
+                                   <body>
+                                      <h1 style="text-align: center">Project 0001</h1> 
+                                      <button id="myButton">Call back</button> 
+
+                                      <script src="./lib1.js"></script>
+                                      <script src="./lib2.js"></script>
+                                      <script src="./app.js"></script>
+                                    </body>
+                                    </html>
+                                    
+   so codes from lib1.js and lib2.js and app.js actually sits there and make a chunk of code .
+   If I am defining variable var lib="arsalan" in lib1.js and same variable var lib ="some other developer" is assigned by some developer in lib2.js then my var lib="arsalan" get ovverride by var lib="some other developer" .
+   
+   Solution:-  we should assign global variable like
+   
+                    windows.lib=windows.log || "arsalan"
                                  
-                                 
-                                 
-                                 
-                                 
-                                 
+                      so if variable is already defined in some file globally dont override it .if not assigned with string "arsalan"
+      
+      
+      
                                  
                                  
                                  
