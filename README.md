@@ -492,9 +492,64 @@ Setting default value :-
                     windows.lib=windows.log || "arsalan"
                                  
                       so if variable is already defined in some file globally dont override it .if not assigned with string "arsalan"
+                      
+                      
+                      
+ ////////////////////////SECTION  Object And Function//////////////////////////////////
+ 
+ object can contain 2 things 
+ 1:-property(primitive or other object)
+ 2:-methods(methods are functions tied with object)
+ 
+ object can be accessed in 2 ways:-
+ 1:-Computed member access operator (property accessor)
+ 2:-Dot operator (.)
+ 
+ 1:-Computed member access operator (property accessor):-
       
+        var myObject={
+                name:"arsalan",
+                work:"explorer"
+            }
+            //computed member access operator(property accessor)
+
+            console.log(myObject[name])  //undefined
+            console.log(myObject["name"]) // arsalan      
       
-      
+   this operator basically looks for property name given as a string in [] of object .
+   Why it is giving 
+   
+    console.log(myObject[name])  //undefined
+    
+  because it looks for variable "name" and that got initialise with undefine at creation time.
+  now it is looking for undefined property in object(at exicution time) now that undefined property is assigned with value undefined (again at creation time).
+  so it gives undefine.(thats a fuck I know see this)
+  
+  
+                        var myObject={
+                            name:"arsalan",
+                            work:"explorer",
+                            city:"varanasi",
+                            undefined:"this is weird"
+                        }
+                    //computed member access operator(property accessor)
+                    var cityPlaceHolder="city"
+
+                    console.log(myObject[cityPlaceHolder])   //varanasi
+                    console.log(myObject["name"])             //arsalan
+                    console.log(myObject[name])                 //this is weird
+                    console.log(myObject["randomVariableName"])     //undefined
+                    console.log(myObject[name])                     //this is weired
+                    console.log(myObject[randomVariableName])        //this will give error because JS will not assigne undefine to                           randomVariableName here because object keys will always be unique since it is a hash map..
+                    
+    
+ 2:-Dot Operator:-
+ 
+      myObject.name=new Object();
+      myObject.name.firstname="arsalan"
+         myObject.name.lastName="adeeb"
+  
+  
                                  
                                  
                                  
