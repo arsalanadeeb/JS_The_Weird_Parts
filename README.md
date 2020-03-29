@@ -545,19 +545,331 @@ Setting default value :-
     
  2:-Dot Operator:-
  
-      myObject.name=new Object();
-      myObject.name.firstname="arsalan"
-         myObject.name.lastName="adeeb"
+        var myObject=new Object()
+        myObject.name="userName"
+        console.log(myObject.name) //userNAme
+        myObject.skills=new Object()
+        myObject.skills.programming="Good" // Good
+        console.log(myObject.skills.programming)
+        myObject.address.city="varanasi" //Uncaught TypeError: Cannot set property 'city' of undefined
+Here we need to first create address key inside myobject then only we can create city key inside adress
+
+Object Literals:-
+
+When JS compiler reads {} and they are not part of block (if esle for or function) it creates a object.
   
+              var Arsalan={
+                        firstName:"Arsalan",
+                        lastName:"Adeeb"
+                          }
+                          console.log(typeof(Arsalan))   //object
+                          console.log(typeof(Arsalan)==="object")  //true
+                          console.log(Arsalan)  
+            
+ The best part of object literals is you can create it on the fly like   greet({firstName:"Shahrukh",lastName:"Khan"})
+   
+                        function greet(object){
+                    console.log("Hellow Mr "+ object.firstName+object.lastName)
+                    }
+
+
+                    greet(Arsalan)
+                    greet({firstName:"Shahrukh",lastName:"Khan"})
+
   
                                  
+ JSON and Object Literals:-
+ 
+ JSON is a subset of JS object Literals .
+ Object Literal can have keys both as string or value but json have a strict protocol that keys can only be strings.
+ 
+ Global object window have a class JSON just type JSON there .
+ That JSON class contain 2 method stringify() and parse() only.
+                  var order={
+                              "fruit": "Apple",
+                              "size": "Large",
+                              "color": "Red",
+                              adrress:{
+                                  Adress1:"111 bakers street",
+                                  city:"Bareilly"
+                              }
+                          }
+                          var orderString=JSON.stringify(order)
+                          console.log(orderString)
+                          console.log(JSON.parse(orderString))
+                          
+                          
+                          
+Functions:-
+
+
+First Order Function :-Just like JS object and primitive JS functions are also a block of memory.
+You can Imagine  a function like block in memory like below.
+
+Function
+   ----------------
+   |    Name      |
+   ----------------
+   |      Code    |
+   ----------------
+   |   argument   |
+   ----------------
+   |     caller   |
+   ----------------
+   |  call apply  |
+   ----------------                              
+  Note:-Function instances inherit methods from Function.prototype.      
+  
+  The code section contains code which is invokable.
+  
+                  function add (a,b){
+
+                if(arguments.length){  //here argument is coming from prototype
+                    return a+b
+                }
+                else{
+                    console.log("plaese pass args")
+
+                }
+                }
+
+
+                console.log(add(1,2))  
+                add() 
+ same code wit es6 rest operator
+                 function add (...args){
+                    console.log(arguments.length)
+                 if(arguments.length){
+                     return args[0]+args[1]
+                 }
+                 else{
+                     console.log("plaese pass args")
+
+                 }
+                 }
+
+
+                 console.log(add(1,2))
+                 add() 
+             
+Function is a object or a box in a memory function name is a special box in function box that contains its name .
+function add(a,b){} here add is a refrence that points to add box we can achive it explicitly also by making anonimous function and take refrence or function object in that
+
+
+                      var anonimousGreet =function  (a,b){
+                          console.log(arguments)
+                          console.log("Hellow from anynomous")
+                      }
+                      anonimousGreet(2,3)
+                      
+  Here anonimousGreet is a variable points to function since it is dynamically typed language we can have it var other wise it would have been a pointer to function type variable.
+
+                      var anonimousGreet =function add(a,b){
+                          console.log(arguments)
+                          console.log("Hellow from anynomous")
+                      }
+
+
+                      anonimousGreet(2,3)
+                      
+add() will give error here why because ........add is no longer pointing the code   anonimousGreet overrides add.
+() will exicutes the code part of the code.
+
+How functions can also be passed as an argument like primitive and objectLiterals(on the fly)
+
+                        var exicute=function (a){
+                        a()
+                        }
+
+
+                        exicute(function(){console.log("annonimous got exicuted")})
+                        
+                        
+ Concept of pass by value and pass by refrence and mutation
+ 
+ for premitive assignment operator actually create a new memory and populate it with the value of rhs refrence value
+ but for object and function this is not the case only reference got created .
+ 
+                        var a =2
+                        var b=a
+                        b++
+                        console.log(a,b)   //o/p = 2,3
+
+                        var greet={
+                            word:"Hellow"
+                        }
+                        var greetIndia=greet
+
+                        greetIndia.word="Namaste"
+
+                        console.log(greet,greetIndia) //o/p {word: "Namaste"} {word: "Namaste"}
+                      
+
+The concept of 'this'
+
+
+                                                        var count =0
+                                                        let c={
+                                                            name:"the c object",
+                                                            log:function(){
+                                                                console.log(count)
+                                                                count++
+                                                                if(count<100){
+                                                                    this.log()
+                                                                }
+                                                            }
+                                                        }
+                                                        c.log()
+
+                                                        var myFunction =function(){
+                                                            console.log(this)
+                                                            this.username="Arsalan"
+                                                        }
+                                                        myFunction()
+                                                        console.log(username)
+
+
+                                                        var count =0
+                                                        let c={
+                                                            name:"the c object",
+                                                            log:function(){
+                                                                console.log(count)
+                                                                count++
+                                                                    this.log()
+                                                            }
+                                                        }
+                                                        c.log()
+                                                        
+                                                        
+               let myFunction= {
+                          name:"arsalan",
+                          method:function(){
+                              this.name="Adeeb"
+
+                          }
+
+              }
+              console.log(myFunction.name) //"arsalan"
+              myFunction.method()
+              console.log(myFunction.name) //"Adeeb"
+
+Interesting example
+
+                  let myFunction= {
+                              name:"arsalan",
+                              method:function(){
+
+                                  let newMethod=function(value){
+                                      this.name=value
+                                  }
+                                  newMethod("Arsalan Adeeb")
+                              }
+
+                  }
+                  console.log(myFunction.name)
+                  myFunction.method()
+                  console.log(myFunction.name)
+                  
+     
+     Very very Confused with these need to do more work.
+     
+              let myFunction= {
+                          name:"arsalan",
+                          method:function(){
+
+                              let newMethod=function(value){
+                                  this.name=value  //why the context is global
+                                  console.log(this)
+                              }
+                              newMethod("Arsalan Adeeb")
+                              console.log(this)
+                          }
+
+              }
+              console.log(myFunction.name)
+              myFunction.method()
+              console.log(myFunction.name)
+              console.log(myFunction.method)
+              
+              
+              
+Array is a collection of anything:-
+
+
+                      var array=[
+                          1,
+                          true,
+                          "Arsalan",
+                          function (name){
+                              console.log("Hellow my friend "+name)
+                          }
+                      ]
+
+
+                      array[3](array[2])
+
+
+ Spread operator:-
+                        var myFunction =function(name,isStudent,amount,...others){
+                        console.log("explictArgs",name,isStudent,amount)
+                        console.log("spread",others)
+                        }
+
+                        myFunction("Arsalan",true,2500,"Varanasi","Up")
+                        
+ You can achive the same with argument array also.
+ 
+ 
+ Automatic Semicolon Insertion:-
+ "Enter" buttons put a invisible character in the code Syntax parser decides what to do when see Enter Character in the code.
+ 
+ 
+                      function obj(){
+                      
+                          return                     //Automatic syntax injection after return on seeing invisible enterChar\|/
+                           {
+                              firstname:"arsalan"
+                          }
+                      }
+
+                      console.log(obj())   //o/p:-Undefined
                                  
                                  
-                                 
-                                 
-                                 
-                                 
-                                 
+Immidiately Invoked Function Expression(IIFE):-
+
+                                    //function statement
+
+                                    function print(){
+                                        console.log("printing")
+                                    }
+                                    //function expression
+
+                                    var ePrint=function (name){
+                                    console.log(name)
+                                    }
+
+                                    //IIFE
+
+                                    var iife=function (name){
+                                    console.log(name)
+                                    return "return"+name
+                                    }("IIFE");
+
+                                    console.log(iife)
+
+                                    //IIFE without any refernce to return object
+                                    (function (name){
+                                        console.log(name)
+                                        return "return"+name
+                                        }("AIIFE"));
+
+                                    //O/p
+                                    // IIFE
+                                    // app.js
+                                    // app.js
+                                    
+                                    
+
                                  
                                  
                                  
