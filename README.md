@@ -868,9 +868,116 @@ Immidiately Invoked Function Expression(IIFE):-
                                     // app.js
                                     // app.js
                                     
-                                    
 
-                                 
+CLOSURES:-
+Since functions are objects it can be returned from a function or can be passed as a argument in other function.
+
+Function returning function
+
+                function one(){
+                    return function (){
+                        console.log("function returning function")
+                    }
+                }
+
+                one()()
+                
+ passing function as a argument.
+ 
+                 var argFun =function (){
+                    console.log("function as a argument")
+                }
+
+
+                function exicuter (args){
+                    args()
+                }
+
+                exicuter(argFun)
+                
+  Closures Example:-
+  
+                function closure (args){
+                  let myVAr=args   //In closures this called free variable
+                  return function (cArgs){
+                   console.log(args,cArgs)
+                  }
+               }
+
+               let retFun=closure("hellow")
+               //In exicution context will remove after closure() exicution but not everything got wiped out 
+               //myVAr=args will be there even after the exicution of closure()
+               retFun("Closure")
+
+               //o/p :- hellow Closure
+
+One Example to understand the whole game
+
+
+                      function funGenerator(){
+                          var arr=[]
+
+                          for (var i=0;i<3;i++){
+                              arr.push(function(){
+                                  console.log(i)
+                              })
+                          }
+                          return arr
+                      }
+
+                      var functionArray=funGenerator()
+                      functionArray[0]()
+                      functionArray[1]()
+                      functionArray[2]()
+
+                      //o/p  3,3,3
+                      
+ var provides block level scope so after funGenerator() exicution context got poped out but except i because it is a free variable (used in closure function) since the scope of i is at block level so after 2 increment i become 2 and one i++ before coming out so i =3 and all internal function are pointing to i which is after exicution of funGenerator is 3 .
+ This problem can be fixed by replacing var to let since let is having block level scoping even at function and if level.
+ 
+ One more possible solution is to create a context for each function using IIFE.
+ 
+                               function funGenerator(){
+                                  var arr=[]
+
+                                  for (var i=0;i<3;i++){
+                                      arr.push((function(j){
+                                          console.log(j)
+                                      })(i))
+                                  }
+                                  return arr
+                              }
+
+                              var functionArray=funGenerator()
+                              functionArray[0]()
+                              functionArray[1]()
+                              functionArray[2]()
+
+                              //o/p  0,1,2
+
+  TakeAway:-IIFE  can be used to create scopes .
+  
+  Using Closures to create function factory.
+  
+                                                            function functionGenerator(operator){
+                                                          return function(a,b){
+                                                              if(operator==="+"){
+                                                                  return a+b
+                                                              }
+                                                              if(operator==="-"){
+                                                                  return a-b
+                                                              }
+                                                              if(operator==="*"){
+                                                                  return a*b
+                                                              }
+
+                                                          }
+                                                          }
+
+                                                          var add=functionGenerator("+")
+                                                          console.log(add(2,3))
+                                                          
+  Difference between callback and closures.
                                  
                                  
                                  
