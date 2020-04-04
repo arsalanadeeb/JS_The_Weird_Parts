@@ -1,7 +1,6 @@
 # JS_The_Weird_Parts
-//This work is under progress do not read it ....
 
-20/01/2020.....
+This my notes and I will keep updating this in future.
 
 Auther's Philosophy:- "Do not immitate but understand" here auther says do not mimic or just know how thinks work but go under the hood                          and understand the basics that will make you able to write robust code and understand the framework written by                            smart people.
 
@@ -979,11 +978,183 @@ One Example to understand the whole game
                                                           
   Difference between callback and closures.
                                  
+  Callback defination :-
+                              \|/
+            function name(functionExpression){
+            work;
+            work;
+            functionExpression()
+            }
+            
+   A function you have given to another function as args to exicute after some code.
+   
+   Example:-
+   
+                                  function print(){
+                                      console.log("Hellow Call Back")
+                                  }
+
+
+                                  setTimeout(print,3000)
                                  
+Remember call back should always be passed as a refrence do not exicute there unless it is necessary.
+
+
+                      function print(){
+                        console.log("Hellow Call Back")
+                    }
+
+
+                    setTimeout(print,3000)
+  or in case of closure
+                      function print(){
+                       return function(){
+                           console.log("there from closure")
+                       }
+                    }
+
+
+                    setTimeout(print(),3000)
                                  
-                                 
-                                 
-                                 
-                                 
-                                 
+  Inheritence in JS:-
+  
+ Every Single object in js can use other objects methods and property .
+ 
+                      //for demo only never ever use this in your code.
+                              var person ={
+                                  firstName:"Default",
+                                  lastName:"Default",
+                                  getDetail:function(){
+                                      console.log(this.firstName,this.lastName)
+                                  }
+                              }   
+
+                              var arsalan={
+                                  firstName:"Arsalan",
+
+                              }
+
+                              var adeeb={
+                                  firstName:"ad",
+                                  lastName:"eeb"
+                              }
+                              arsalan.__proto__=person
+                              adeeb.__proto__=arsalan
+
+                              adeeb.getDetail()
+                              o/p:-ad eeb
+ Here adeeb is taking prototype of arsalan and arsalan is taking from person .Ultimatly this property should never be used in practice 
+ 
+ 
+ New keyword /constructore function/prototype property:-
+ 
+                        //class structure designing with this pointing to local context
+                            function Student (firstName,lastName,roll){
+                            this.firstName=firstName;
+                            this.lastName=lastName;
+                            this.roll=roll;
+                            this.getFullName=function(){
+                                console.log(this.firstName,this.lastName)
+                            }
+                            }
+
+                        //creating object by running function in constructor mode (If you dont put new function got invoked ret undef)
+                            var Arsalan= new Student("Arsalan","Adeeb",101)
+                        //adding proerty or methos even after creation of cunstructor function
+                            Student.prototype.getRollNo=function(){
+                                console.log(this.roll)
+                            }
+                            
+                        //properties added in cunstructor function will reflect in all of its instance
+                            Arsalan.getRollNo()
+                            console.log(Arsalan)
+                         //even object literal can also acces to newly added property in prototype(Not recommended)
+                            let yash={
+                                firstName:"Yash",
+                                lastName:"Pandey",
+                            }
+
+                            yeshi.__proto__=Arsalan
+
+                            yeshi.getFullName() 
+ 
+ There is two problem with creation of object with constructor function 
+ 1:-if user didnt assign anything during creation time undefined get assigned instead of default value (ofcourse it can be fixed)
+ 
+                                  function Student (firstName,lastName,roll){
+                                  this.firstName=firstName;
+                                  this.lastName=lastName;
+                                  this.roll=roll;
+                                  this.getFullName=function(){
+                                      console.log(this.firstName,this.lastName)
+                                  }
+                                  }
+
+
+                                  var Arsalan= new Student()
+
+                                  Student.prototype.getRollNo=function(){
+                                      console.log(this.roll)
+                                  }
+                                  Arsalan.getRollNo()
+
+2:-cunstructor mode function can also be written in invokable syntax  Student() which will return undefined might create a problem.
+
+
+There are two problem in creating object with object literals 
+1:-When you create a object var a={} its dunder proto .__proto__ points to Object object so basically it inherits only root level logics methods loke hasOwnProperty and valueOf etc
+2:-Remember this prototype chaining is very slow and have performance issue.
+
+                        let a ={}
+                        let b={
+                        name:"kalia",
+                        getName:function(){
+                        console.log(this.name)
+                        }
+                        }
+                        a.__proto__=b
+                        console.log(a.name)  //kalia
+                        
+  Extra Reminder point :-if I do   a.__proto__.name="bale" that will be reflected to b also because refrence sharing.
+  
+  The 100% proper inheritence way of creating object is 
+  
+                  var student={
+                    name:"Default",
+                    class:"Default",
+                    getDetail:function(){
+                        console.log(`Name${this.name} and calss ${this.class}`)
+                    }
+                }
+
+                var arsalan=Object.create(student)
+                console.log(arsalan)  //{}
+                arsalan.getDetail()   //NameDefault and calss Default here these values are coming from prototype
+ 
+ 1:-get default value without assigning.
+ 2:-no need of manual dunder proto assignment
+ 3:-Not all browser support this.
+ A polyfill is a piece of code (usually JavaScript on the Web) used to provide modern functionality on older browsers that do not natively support it.
+ 
+ 
+ 
+ The instanceof operator tests whether the prototype property of a constructor appears anywhere in the prototype chain of an object.
+                   function Car(make, model, year) {
+                    this.make = make;
+                    this.model = model;
+                    this.year = year;
+                  }
+                  const auto = new Car('Honda', 'Accord', 1998);
+
+                  console.log(auto instanceof Car);
+                  // expected output: true
+
+                  console.log(auto instanceof Object);
+                  // expected output: true
+ since it checks for prototype object in prototype chain so it will not literal obtects and and create .
+ 
+ 
+ 
+
+  
   
