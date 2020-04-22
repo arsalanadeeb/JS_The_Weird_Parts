@@ -1153,7 +1153,26 @@ There are two problem in creating object with object literals
                   // expected output: true
  since it checks for prototype object in prototype chain so it will not literal obtects and and create .
  
+ Real Time Scenario:-
  
+ Sorting a object based on the key:-
+ 
+                     const unordered = {
+                      'b': 'foo',
+                      'c': 'bar',
+                      'a': 'baz'
+                    };
+
+                    console.log(JSON.stringify(unordered));
+                    // → '{"b":"foo","c":"bar","a":"baz"}'
+
+                    const ordered = {};
+                    Object.keys(unordered).sort().forEach(function(key) {
+                      ordered[key] = unordered[key];
+                    });
+
+                    console.log(JSON.stringify(ordered));
+                    // → '{"a":"baz","b":"foo","c":"bar"}'
  
 
   
